@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Animated Portfolio</title>
+
+<style>
+:root {
+    --accent: #00f5ff;
+    --text: #e2e8f0;
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+
+    /* 🌈 Animated Gradient Background */
+    background: radial-gradient(circle at 20% 20%, #0ea5e9, transparent 40%),
+                radial-gradient(circle at 80% 30%, #9333ea, transparent 40%),
+                radial-gradient(circle at 50% 80%, #00f5ff, transparent 40%),
+                #020617;
+    background-size: 200% 200%;
+    animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 💡 Mouse Glow */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #00f5ff33, transparent 60%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* ✨ Particles */
+.particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.particles span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-10vh) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Sidebar */
+nav {
+    width: 90px;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    z-index: 2;
+}
+
+nav a {
+    color: white;
+    text-decoration:none;
+    font-size:12px;
+    opacity:0.6;
+    transition:0.3s;
+}
+
+nav a:hover {
+    color: var(--accent);
+    transform: scale(1.2);
+    opacity:1;
+}
+
+/* Main */
+main {
+    margin-left:90px;
+    width:100%;
+    position: relative;
+    z-index: 1;
+}
+
+section {
+    min-height:100vh;
+    padding:80px 10%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+/* Hero */
+.hero { text-align:center; }
+
+.profile {
+    width:180px;
+    height:180px;
+    margin:auto;
+    border-radius:50%;
+    border:3px solid var(--accent);
+    overflow:hidden;
+    box-shadow:0 0 40px var(--accent);
+    animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+    from { box-shadow:0 0 20px var(--accent); }
+    to { box-shadow:0 0 50px var(--accent); }
+}
+
+.profile img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+h1 { font-size:3rem; margin-top:20px; }
+.highlight { color: var(--accent); }
+
+/* Buttons */
+.btn {
+    padding:10px 20px;
+    margin:10px 10px 0 0;
+    border:none;
+    border-radius:20px;
+    background: var(--accent);
+    color:#000;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* Cards */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-top:40px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+    margin-top:20px;
+}
+
+/* Projects */
+.project {
+    height:250px;
+    border-radius:15px;
+    background:#1e293b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.project:hover {
+    background: var(--accent);
+    color:#000;
+    transform: scale(1.05);
+}
+
+/* Form */
+input, textarea {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+    background: rgba(255,255,255,0.05);
+    color:white;
+}
+
+button {
+    padding:12px;
+    width:100%;
+    background: var(--accent);
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 💡 Glow -->
+<div class="cursor-glow" id="glow"></div>
+
+<!-- ✨ Particles -->
+<div class="particles">
+    <span style="left:5%; animation-duration:8s;"></span>
+    <span style="left:15%; animation-duration:10s;"></span>
+    <span style="left:25%; animation-duration:12s;"></span>
+    <span style="left:35%; animation-duration:7s;"></span>
+    <span style="left:45%; animation-duration:11s;"></span>
+    <span style="left:55%; animation-duration:9s;"></span>
+    <span style="left:65%; animation-duration:13s;"></span>
+    <span style="left:75%; animation-duration:8s;"></span>
+    <span style="left:85%; animation-duration:10s;"></span>
+    <span style="left:95%; animation-duration:12s;"></span>
+</div>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<main>
+
+<section id="home" class="hero">
+    <div class="profile">
+        <img src="profile.jpg" alt="Profile">
+    </div>
+    <h1>Hi, I'm <span class="highlight">Prajwal E S</span></h1>
+    <p>Creative Developer & Student</p>
+</section>
+
+<section id="about">
+    <h2>About Me</h2>
+    <button class="btn" onclick="showAbout('skills')">Skills</button>
+    <button class="btn" onclick="showAbout('education')">Education</button>
+    <button class="btn" onclick="showAbout('cert')">Certifications</button>
+
+    <div id="aboutDetails" class="card" style="display:none;">
+        <h3 id="aboutTitle"></h3>
+        <p id="aboutDesc"></p>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+        <div class="project" onclick="showProject('voice')">Voice Translator</div>
+        <div class="project" onclick="showProject('expense')">Expense Tracker</div>
+        <div class="project" onclick="showProject('calc')">Calculator</div>
+    </div>
+
+    <div id="projectDetails" class="card" style="display:none;">
+        <h3 id="projectTitle"></h3>
+        <p id="projectDesc"></p>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <form onsubmit="return sendMessage()">
+        <input type="text" placeholder="Name" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Message"></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+</main>
+
+<script>
+// Mouse Glow
+document.addEventListener("mousemove", (e) => {
+    const glow = document.getElementById("glow");
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+});
+
+// About
+function showAbout(type) {
+    const title = document.getElementById("aboutTitle");
+    const desc = document.getElementById("aboutDesc");
+    const box = document.getElementById("aboutDetails");
+
+    if(type === "skills") {
+        title.innerText = "Skills";
+        desc.innerText = "C, HTML, Web Tech, Soft Skills";
+    }
+    else if(type === "education") {
+        title.innerText = "Education";
+        desc.innerText = "MCA";
+    }
+    else {
+        title.innerText = "Certifications";
+        desc.innerText = "AI & ML";
+    }
+
+    box.style.display = "block";
+}
+
+// Projects
+function showProject(type) {
+    const title = document.getElementById("projectTitle");
+    const desc = document.getElementById("projectDesc");
+    const box = document.getElementById("projectDetails");
+
+    if(type === "voice") {
+        title.innerText = "Voice Translator";
+        desc.innerText = "Real-time speech translation.";
+    }
+    else if(type === "expense") {
+        title.innerText = "Expense Tracker";
+        desc.innerText = "Track daily spending.";
+    }
+    else {
+        title.innerText = "Calculator";
+        desc.innerText = "Basic arithmetic operations.";
+    }
+
+    box.style.display = "block";
+}
+
+// Contact
+function sendMessage() {
+    alert("Message sent!");
+    return false;
+}
+</script>
+
+</body>
+</html>
